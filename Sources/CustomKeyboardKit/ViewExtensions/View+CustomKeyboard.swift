@@ -11,15 +11,14 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 public extension View {
-    func customKeyboard(view: @escaping (UITextDocumentProxy, CustomKeyboardBuilder.SubmitHandler, CustomKeyboardBuilder.SystemFeedbackHandler?) -> some View) -> some View {
-        customKeyboard(CustomKeyboardBuilder(customKeyboardView: view))
+    func customKeyboard<T>(additionalData: T, view: @escaping (UITextDocumentProxy, CustomKeyboardBuilder.SubmitHandler, CustomKeyboardBuilder.SystemFeedbackHandler?, T) -> some View) -> some View {
+        customKeyboard(CustomKeyboardBuilder(additionalData, customKeyboardView: view))
     }
 }
 
 public extension View {
     func customKeyboard(_ keyboardType: CustomKeyboard) -> some View {
-        self
-            .modifier(CustomKeyboardModifier(keyboardType: keyboardType))
+        self.modifier(CustomKeyboardModifier(keyboardType: keyboardType))
     }
 }
 
